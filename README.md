@@ -11,7 +11,9 @@ Enumeration input with the following: order, repetition, objects to chose, objec
 
 ## Part 2
 Cryptarithme in base 11
+
 Looking for a brute force program to generate all possible values
+
 Rules:
 1. A same letter will always be replaced by the same value
 2. Different letters will have diffirent values
