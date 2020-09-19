@@ -1,29 +1,39 @@
-test code for r^n
+//test code for r^n
 
 #include <iostream>
 #include <string.h>
 
 using namespace std;
 
+int c = 0;
+
+void cnt(){
+    c++;
+}
+
 void printPermutations(char *str, char* permutations, int last, int index){
-   int i, len = strlen(str);
+   int i, len = strlen(str);  
+   
    for ( i = 0; i < len; i++ ) {
       permutations[index] = str[i] ;
-      if (index == last)
-         cout<<permutations <<"\t";
-      else
+      if (index == last){
+         cout<< permutations <<endl;
+         cnt();
+      }
+      else{
          printPermutations (str, permutations, last, index+1);
-   }
+      }
+   }   
 }
 int main() {
-   char str[] = "ABC";
+   char str[] = "ABCD";
    cout<<"All permutations of the string with repetition of "<<str<<" are: "<<endl ;
-   int len = strlen(str) ;
+   int len = 3;   
    char permutations[len];
    printPermutations (str, permutations, len-1, 0);
    
    
-   cout << "this line" << endl;
+   cout << "number of permutations " <<c<< endl;
    
    return 0;
 }
