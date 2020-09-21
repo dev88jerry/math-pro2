@@ -70,18 +70,18 @@ int noOrdANDnoRep(int choix, int dispo) {
 	ofstream myFile;
 	myFile.open("possibility.txt", ofstream::trunc);
 
-	string bitmask(choix, 1);
-	bitmask.resize(dispo, 0);
+	vector<bool> v(dispo);
+	fill(v.begin(), v.begin() + choix, true);
 
 	do {
 		myFile << ret << ". ";
 		for (int i = 0; i < dispo; ++i)
 		{
-			if (bitmask[i]) myFile << i + 1 << ",";
+			myFile << i + 1 << ",";
 		}
 		myFile << "\n";
 		ret++;
-	} while (prev_permutation(bitmask.begin(), bitmask.end()));
+	} while (prev_permutation(v.begin(), v.end()));
 	
 	myFile.close();
 
