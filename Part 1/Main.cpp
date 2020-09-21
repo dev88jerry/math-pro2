@@ -12,6 +12,7 @@ Enumeration
 #include <algorithm>
 #include <chrono>
 #include <vector>
+#include <numeric>
 
 using namespace std;
 
@@ -24,25 +25,37 @@ int ordANDrep(int choix, int dispo) {
 	return ret;
 }
 
-//dispo!/(dispo-choix)!
+//dispo!/(dispo-choix)! - permu
 int ordANDnoRep(int choix, int dispo) {
 	int ret = 1;
-	
-	vector<int> ints;
-	for(int i=0;i<dispo; ints.push_back(i++));
-	
-	while(next_permutation(ints.begin(), ints.end())){
-		for(int i=0;i<choix;i++){
-			cout << ints.at(i);
-		}
-		ret++;
-		cout <<endl;
-	}
 
-	return ret/2;
+	ofstream myFile;
+	myFile.open("possibility.txt", ofstream::trunc);
+	
+	vector<int> d(dispo);
+	iota(d.begin(), d.end(), 1);
+
+	do {		
+		myFile << ret << ". ";
+		cout << ret << ". ";
+
+		for (int i = 0; i < choix; ++i) {			
+			cout << d[i] << ", ";
+			myFile << d[i] << ", ";
+		}
+		myFile << "\n";
+		cout << "\n";
+		ret++;
+		reverse(d.begin() + choix, d.end());
+	} while (next_permutation(d.begin(), d.end()));
+
+
+	myFile.close();
+
+	return ret;
 }
 
-//permu
+//(n+r-1)!/r!(n-1)!
 int noOrdANDrep(int choix, int dispo) {
 	int ret = 1;
 
@@ -54,23 +67,22 @@ int noOrdANDrep(int choix, int dispo) {
 int noOrdANDnoRep(int choix, int dispo) {
 	int ret = 1;
 
-	fstream myFile;
-	myFile.open("/possibility.txt");
+	ofstream myFile;
+	myFile.open("possibility.txt", ofstream::trunc);
 
-	string bitmask(choix, 1); // K leading 1's
-	bitmask.resize(dispo, 0); // N-K trailing 0's
+	string bitmask(choix, 1);
+	bitmask.resize(dispo, 0);
 
-							  // print integers and permute bitmask
 	do {
 		myFile << ret << ". ";
-		for (int i = 0; i < dispo; ++i) // [0..N-1] integers
+		for (int i = 0; i < dispo; ++i)
 		{
-			if (bitmask[i]) myFile << i << ",";
+			if (bitmask[i]) myFile << i + 1 << ",";
 		}
 		myFile << "\n";
 		ret++;
 	} while (prev_permutation(bitmask.begin(), bitmask.end()));
-
+	
 	myFile.close();
 
 	return ret;
@@ -99,8 +111,18 @@ int main()
 	int pos;
 
 	if (ord && rep) {
+		auto start = chrono::high_resolution_clock::now();
+		ios_base::sync_with_stdio(false);
+
 		pos = ordANDrep(oChoisir, oDispo);
-		cout << "On a trouve : " << pos - 1 << " possibilite" << endl;
+		cout << "On a trouve : " << pos - 1 << " possibilite" << endl;		
+
+		auto end = chrono::high_resolution_clock::now();
+		double time_taken = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+		time_taken *= 1e-9;
+		cout << "Time taken by function is : ";
+		cout << fixed << time_taken << setprecision(9);
+		cout << " sec" << endl;
 	}
 	else if (ord && !rep) {
 		auto start = chrono::high_resolution_clock::now();
@@ -134,9 +156,9 @@ int main()
 		auto start = chrono::high_resolution_clock::now();
 		ios_base::sync_with_stdio(false);
 
-		pos = noOrdANDnoRep(oChoisir, oDispo);
+		pos = noOrdANDnoRep(oChoisir, oDispo);		
 		cout << "On a trouve : " << pos - 1 << " possibilite" << endl;
-
+		
 		auto end = chrono::high_resolution_clock::now();
 		double time_taken = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
 		time_taken *= 1e-9;
