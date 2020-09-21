@@ -3,10 +3,10 @@
 ## Part 1
 Enumeration input with the following: order, repetition, objects to chose, objects available
 
-- [ ] enumeration(0,0,7,11)
-- [ ] enumeration(0,1,7,11)
-- [ ] enumeration(1,0,7,11)
-- [ ] enumeration(1,1,7,11)
+- [X] enumeration(0,0,7,11) -Run time very long
+- [X] enumeration(0,1,7,11)
+- [X] enumeration(1,0,7,11)
+- [X] enumeration(1,1,7,11)
 
 
 ## Part 2
