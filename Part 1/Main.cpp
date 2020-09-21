@@ -13,6 +13,7 @@ Enumeration
 #include <chrono>
 #include <vector>
 #include <numeric>
+#include <string>
 
 using namespace std;
 
@@ -59,7 +60,45 @@ int ordANDnoRep(int choix, int dispo) {
 int noOrdANDrep(int choix, int dispo) {
 	int ret = 1;
 
+	ofstream myFile;
+	myFile.open("possibility.txt", ofstream::trunc);
 
+	vector<string> op;
+
+	for (int i = 1; i <= dispo; i++) {
+		op.push_back(to_string(i));
+	}
+
+	dispo--;
+	vector<int> v(choix + 1, 0);
+	while (true) {
+		for (int i = 0; i < choix; i++) {
+			if (v[i] > dispo) {
+				v[i + 1] += 1;
+				for (int j = i; j >= 0; --j) {
+					v[j] = v[i + 1];
+				}
+			}
+		}
+
+		if (v[choix] > 0)break;
+
+		cout << ret << ". ";
+		myFile << ret << ". ";
+		//print
+		for (int i = 0; i < choix; i++) {
+			cout << op[v[i]].c_str() << ", ";
+			myFile << op[v[i]].c_str() << ", ";
+		}
+		cout << endl;
+		myFile << "\n";
+		
+		v[0] += 1;
+		ret++;
+	}
+
+	myFile.close();
+	
 	return ret;
 }
 
@@ -82,7 +121,7 @@ int noOrdANDnoRep(int choix, int dispo) {
 		myFile << "\n";
 		ret++;
 	} while (prev_permutation(v.begin(), v.end()));
-	
+
 	myFile.close();
 
 	return ret;
