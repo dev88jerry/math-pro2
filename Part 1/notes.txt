@@ -1,39 +1,42 @@
-//test code for r^n
+//working code for r^n
 
-#include <iostream>
-#include <string.h>
+#include <cstdio>
 
-using namespace std;
-
-int c = 0;
-
-void cnt(){
-    c++;
-}
-
-void printPermutations(char *str, char* permutations, int last, int index){
-   int i, len = strlen(str);  
-   
-   for ( i = 0; i < len; i++ ) {
-      permutations[index] = str[i] ;
-      if (index == last){
-         cout<< permutations <<endl;
-         cnt();
-      }
-      else{
-         printPermutations (str, permutations, last, index+1);
-      }
-   }   
-}
-int main() {
-   char str[] = "ABCD";
-   cout<<"All permutations of the string with repetition of "<<str<<" are: "<<endl ;
-   int len = 3;   
-   char permutations[len];
-   printPermutations (str, permutations, len-1, 0);
-   
-   
-   cout << "number of permutations " <<c<< endl;
-   
-   return 0;
+int main(){	
+	int temp;
+	int numbers=7;
+	int a[numbers+1], upto = 11, temp2;
+	for( temp2 = 1 ; temp2 <= numbers; temp2++){
+		a[temp2]=1;
+	}
+	a[numbers]=0;
+	temp=numbers;
+	
+	int ret = 1;
+	
+	
+	while(1){
+		if(a[temp]==upto){
+			temp--;
+			if(temp==0)
+				break;
+		}
+		else{
+			a[temp]++;
+			while(temp<numbers){
+				temp++;
+				a[temp]=1;
+			}
+ 			
+ 			printf("%d. ", ret);
+			for( temp2 = 1 ; temp2 <= numbers; temp2++){
+				printf("%d ", a[temp2]);
+			}
+			printf("\n");
+			ret++;
+		}
+	}
+	
+	printf("\n On a trouver %d possibilite\n", ret);
+	return 0;
 }
