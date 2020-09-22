@@ -16,5 +16,11 @@ Looking for a brute force program to generate all possible values
 
 Rules:
 1. A same letter will always be replaced by the same value
-2. Different letters will have diffirent values
+2. Different letters will have different values
 3. The first letter can't be 0
+
+To solve:
+
+ROME + JACA + CANA = VILLE
+
+Where A=1, B=10, E=8, G=0, ... as per rules above
