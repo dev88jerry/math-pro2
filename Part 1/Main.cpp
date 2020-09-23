@@ -21,8 +21,40 @@ using namespace std;
 int ordANDrep(int choix, int dispo) {
 	int ret = 1;
 
+	int temp, temp2;
+	
+	vector<int> a;
 
+	for (temp2 = 1; temp2 <= choix + 1; temp2++) {
+		a.push_back(1);
+	}
+	a.at(choix) = 0;
+	temp = choix;
 
+	while (true)
+	{
+		if (a.at(temp) == dispo) {
+			temp--;
+			if (temp == 0) {
+				break;
+			}
+		}
+		else {
+			a.at(temp)++;
+			while (temp < choix) {
+				temp++;
+				a.at(temp) = 1;
+			}
+
+			cout << ret << ". ";
+			for (temp2 = 1; temp2 <= choix; temp2++) {
+				cout << a.at(temp2) << " ";
+			}
+			cout << endl;
+			ret++;
+		}
+	}
+	
 	return ret;
 }
 
