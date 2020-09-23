@@ -20,9 +20,11 @@ using namespace std;
 //dispo^choix
 int ordANDrep(int choix, int dispo) {
 	int ret = 1;
-
-	int temp, temp2;
 	
+	ofstream myFile;
+	myFile.open("possibility.txt", ofstream::trunc);
+
+	int temp, temp2;	
 	vector<int> a;
 
 	for (temp2 = 1; temp2 <= choix + 1; temp2++) {
@@ -46,15 +48,20 @@ int ordANDrep(int choix, int dispo) {
 				a.at(temp) = 1;
 			}
 
-			cout << ret << ". ";
+			//cout << ret << ". ";
+			myFile << ret << ". ";
 			for (temp2 = 1; temp2 <= choix; temp2++) {
-				cout << a.at(temp2) << " ";
+				//cout << a.at(temp2) << ", ";
+				myFile << a.at(temp2) << ", ";
 			}
-			cout << endl;
+			//cout << endl;
+			myFile << "\n";
 			ret++;
 		}
-	}
+	}		
 	
+	myFile.close();
+
 	return ret;
 }
 
@@ -70,14 +77,14 @@ int ordANDnoRep(int choix, int dispo) {
 
 	do {		
 		myFile << ret << ". ";
-		cout << ret << ". ";
+		//cout << ret << ". ";
 
 		for (int i = 0; i < choix; ++i) {			
-			cout << d[i] << ", ";
+			//cout << d[i] << ", ";
 			myFile << d[i] << ", ";
 		}
 		myFile << "\n";
-		cout << "\n";
+		//cout << "\n";
 		ret++;
 		reverse(d.begin() + choix, d.end());
 	} while (next_permutation(d.begin(), d.end()));
@@ -115,14 +122,14 @@ int noOrdANDrep(int choix, int dispo) {
 
 		if (v[choix] > 0)break;
 
-		cout << ret << ". ";
+		//cout << ret << ". ";
 		myFile << ret << ". ";
-		//print
+
 		for (int i = 0; i < choix; i++) {
-			cout << op[v[i]].c_str() << ", ";
+			//cout << op[v[i]].c_str() << ", ";
 			myFile << op[v[i]].c_str() << ", ";
 		}
-		cout << endl;
+		//cout << endl;
 		myFile << "\n";
 		
 		v[0] += 1;
@@ -146,10 +153,15 @@ int noOrdANDnoRep(int choix, int dispo) {
 
 	do {
 		myFile << ret << ". ";
+		//cout << ret << ". ";
 		for (int i = 0; i < dispo; ++i)
 		{
-			myFile << i + 1 << ",";
+			if (v[i]) {
+				//cout << i + 1 << ", ";
+				myFile << i + 1 << ",";
+			}
 		}
+		//cout << endl;
 		myFile << "\n";
 		ret++;
 	} while (prev_permutation(v.begin(), v.end()));
