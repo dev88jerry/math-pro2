@@ -24,7 +24,7 @@ int ordANDrep(int choix, int dispo) {
 	ofstream myFile;
 	myFile.open("possibility.txt", ofstream::trunc);
 
-	int temp, temp2;	
+	int temp, temp2;
 	vector<int> a;
 
 	for (temp2 = 1; temp2 <= choix + 1; temp2++) {
@@ -81,7 +81,7 @@ int ordANDnoRep(int choix, int dispo) {
 
 		for (int i = 0; i < choix; ++i) {			
 			//cout << d[i] << ", ";
-			myFile << d[i] << ", ";
+			myFile << d.at(i) << ", ";
 		}
 		myFile << "\n";
 		//cout << "\n";
@@ -113,14 +113,14 @@ int noOrdANDrep(int choix, int dispo) {
 	while (true) {
 		for (int i = 0; i < choix; i++) {
 			if (v[i] > dispo) {
-				v[i + 1] += 1;
+				v.at(i + 1) += 1;
 				for (int j = i; j >= 0; --j) {
-					v[j] = v[i + 1];
+					v.at(j) = v.at(i + 1);
 				}
 			}
 		}
 
-		if (v[choix] > 0)break;
+		if (v.at(choix) > 0)break;
 
 		//cout << ret << ". ";
 		myFile << ret << ". ";
@@ -132,7 +132,7 @@ int noOrdANDrep(int choix, int dispo) {
 		//cout << endl;
 		myFile << "\n";
 		
-		v[0] += 1;
+		v.at(0) += 1;
 		ret++;
 	}
 
@@ -156,7 +156,7 @@ int noOrdANDnoRep(int choix, int dispo) {
 		//cout << ret << ". ";
 		for (int i = 0; i < dispo; ++i)
 		{
-			if (v[i]) {
+			if (v.at(i)) {
 				//cout << i + 1 << ", ";
 				myFile << i + 1 << ",";
 			}
@@ -189,7 +189,7 @@ int main()
 	cin >> oDispo;
 
 	//test input
-	cout << ord << " " << rep << " " << oChoisir << " " << oDispo << endl;
+	cout << "Enumeration (" << ord << " " << rep << " " << oChoisir << " " << oDispo << ")" << endl;
 
 	int pos;
 
